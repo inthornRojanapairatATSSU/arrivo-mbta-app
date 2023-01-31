@@ -6,8 +6,8 @@ const Landingpage = () => {
     return (
         <Card style={{ width: '30rem' }} className="mx-2 my-2">
         <Card.Body>
-          <Card.Title>Professor Brockenbrough's User Skeleton App</Card.Title>
-          <Card.Subtitle className="mb-2 text-muted">A starting point for an application.</Card.Subtitle>
+          <Card.Title>Inthorn Rojanapairat's First Web App</Card.Title>
+          <Card.Subtitle className="mb-2 text-muted">How make website?</Card.Subtitle>
           <Card.Text>
           </Card.Text>
           <Card.Link href="/signup">Sign Up</Card.Link>

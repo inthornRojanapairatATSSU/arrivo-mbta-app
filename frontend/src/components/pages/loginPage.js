@@ -90,7 +90,7 @@ const Login = () => {
                     placeholder="Enter username"
                   />
                   <Form.Text className="text-muted">
-                    We just might sell your data
+                    Better check your windows tonight
                   </Form.Text>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">

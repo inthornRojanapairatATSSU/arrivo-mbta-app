@@ -44,8 +44,8 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(url, data);
-      // const {accessToken} = res
+      const { data: res } = await axios.post(url, data);
+      const {accessToken} = res
       //store token in localStorage
       navigate("/login");
     } catch (error) {
@@ -90,7 +90,7 @@ const Register = () => {
                     placeholder="Enter Email Please"
                   />
                   <Form.Text className="text-muted">
-                    We just might sell your data
+                    We just might figure out your home address
                   </Form.Text>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">

@@ -20,6 +20,7 @@ function Alerts() {
       {alerts.map(alert => (
         <Card
         body
+        border = "success"
         outline
         color="success"
         className="mx-1 my-2"
@@ -30,7 +31,6 @@ function Alerts() {
         <Card.Text>Direction ID: {alert.attributes.direction_id}</Card.Text>
         <Card.Text>{alert.attributes.name}</Card.Text>
         <Card.Text>Time Description: {alert.attributes.time_desc}</Card.Text>
-        <Card.Text>{alert.}</Card.Text>
         </Card.Body>
       </Card>
       ))}
