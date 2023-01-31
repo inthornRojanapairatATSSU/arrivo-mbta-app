@@ -24,8 +24,8 @@ function Alerts() {
         border = "info"
         outline
         color="info"
-        className="mx-1 my-2 text-center"
-        style={{ width: "30rem" }}
+        className="mx-auto my-2 text-center"
+        style={{ width: "40rem" }}
       >
         <Card.Body>
         <Card.Title>Alert</Card.Title>

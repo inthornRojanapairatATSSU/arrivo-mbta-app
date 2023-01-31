@@ -23,8 +23,8 @@ function Alerts() {
         border = "success"
         outline
         color="success"
-        className="mx-1 my-2"
-        style={{ width: "30rem" }}
+        className="mx-auto my-2"
+        style={{ width: "40rem" }}
       >
         <Card.Body>
         <Card.Title>Route Patterns!</Card.Title>
