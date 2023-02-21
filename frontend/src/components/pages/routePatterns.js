@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
+import getUserInfo from "../../utilities/decodeJwt";
 
 function Alerts() {
+  const [user, setUser] = useState({});
   const [alerts, setAlerts] = useState([]);
 
   useEffect(() => {
+    setUser(getUserInfo())
     async function fetchData() {
       const result = await axios(
         'https://api-v3.mbta.com/route_patterns?page%5Blimit%5D=5&sort=name',
@@ -15,6 +18,7 @@ function Alerts() {
     fetchData();
   }, []);
 
+  if (!user) return (<div><h4>Log in to view this page.</h4></div>)
   return (
     <div>
       {alerts.map(alert => (

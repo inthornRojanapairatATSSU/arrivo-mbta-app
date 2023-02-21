@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
+import getUserInfo from "../../utilities/decodeJwt";
 
 function Alerts() {
+  const [user, setUser] = useState({});
   const [alerts, setAlerts] = useState([]);
+
+  useEffect(() => {
+    setUser(getUserInfo())
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -16,6 +21,7 @@ function Alerts() {
     fetchData();
   }, []);
 
+  if (!user) return (<div><h4>Log in to view this page.</h4></div>)
   return (
     <div>
       {alerts.map(alert => (
@@ -23,19 +29,19 @@ function Alerts() {
         body
         border = "info"
         outline
-        color="info"
+        color= "info"
         className="mx-auto my-2 text-center"
         style={{ width: "40rem" }}
       >
         <Card.Body>
         <Card.Title>Alert</Card.Title>
         
-        <Card.Text>Summary: {alert.attributes.short_header}</Card.Text>
-        <Card.Text>{alert.attributes.header} {alert.attributes.description}</Card.Text>
+        <Card.Text><b>Summary:</b> {alert.attributes.short_header}</Card.Text>
+        <Card.Text><b>{alert.attributes.header}</b> {alert.attributes.description}</Card.Text>
         <Card.Text>{alert.attributes.service_effect}</Card.Text>
         <Card.Text>Severity: {alert.attributes.severity}</Card.Text>
         <Card.Text>Timeframe: {alert.attributes.timeframe}</Card.Text>
-        <Card.Text>Updated: {alert.attributes.updated_at}</Card.Text>
+        <Card.Text><i>Updated:</i> {alert.attributes.updated_at}</Card.Text>
         </Card.Body>
       </Card>
       ))}
