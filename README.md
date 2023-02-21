@@ -1,5 +1,9 @@
-# mern-user-skeleton
-This MERN stack implementation creates a small web application that lets users register, login, view a home page, and logout. 
+# Arrivo: Runs on MBTA API
+## Hassle-free train web app
+This MERN stack implementation creates a small web application that lets users register, login, view a home page, and logout.
+
+# Introduction
+The MBTA Transit app is a web-based application that displays real-time updates on train arrival and departures. It allows users to identify which alert to prioritize through the severity of the alert. When it comes to this transit app, it allows users to receive filtered alerts based on their preference and prioritization of their train line. Also, the app is in a comprehensible format for users to view the incoming trains.
 
 Configuration
 -------------
