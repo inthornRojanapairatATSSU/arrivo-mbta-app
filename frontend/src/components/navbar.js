@@ -3,7 +3,7 @@ import getUserInfo from '../utilities/decodeJwt';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import ReactNavbar from 'react-bootstrap/Navbar';
-
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 // Here, we display our Navbar
 export default function Navbar() {
@@ -20,14 +20,22 @@ export default function Navbar() {
   // we have an issue with getUserInfo() returning null after a few minutes
   // it seems.
   return (
-    <ReactNavbar bg="dark" variant="dark">
+    <ReactNavbar bg="primary" variant="dark">
     <Container>
+      <ReactNavbar.Brand href="/">ARRIVO</ReactNavbar.Brand>
       <Nav className="me-auto">
         <Nav.Link href="/">Start</Nav.Link>
         <Nav.Link href="/home">Home</Nav.Link>
         <Nav.Link href="/privateUserProfile">Profile</Nav.Link>
 		    <Nav.Link href = "/mbtaAlerts">Alerts</Nav.Link>
 		    <Nav.Link href = "/routePatterns">Route Patterns</Nav.Link>
+        <Nav.Link href = "#" disabled>Secret Train Routes</Nav.Link>
+        <NavDropdown title="More" id="navbarScrollingDropdown">
+          <NavDropdown.Item href = "#">About Us</NavDropdown.Item>
+          <NavDropdown.Item href = "#">Patreon (GIVE $$$)</NavDropdown.Item>
+          <NavDropdown.Divider></NavDropdown.Divider>
+          <NavDropdown.Item href = "#">Kickstarter (NOT SCAM)</NavDropdown.Item>
+        </NavDropdown>
       </Nav>
     </Container>
   </ReactNavbar>
