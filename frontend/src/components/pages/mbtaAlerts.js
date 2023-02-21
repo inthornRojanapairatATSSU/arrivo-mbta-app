@@ -9,9 +9,6 @@ function Alerts() {
 
   useEffect(() => {
     setUser(getUserInfo())
-  }, []);
-
-  useEffect(() => {
     async function fetchData() {
       const result = await axios(
         'https://api-v3.mbta.com/alerts?filter%5Bactivity%5D=BOARD%2CEXIT%2CRIDE',
