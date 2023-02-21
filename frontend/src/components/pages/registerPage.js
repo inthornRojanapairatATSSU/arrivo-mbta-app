@@ -45,6 +45,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const { data: res } = await axios.post(url, data);
+      //eslint-disable-next-line
       const {accessToken} = res
       //store token in localStorage
       navigate("/login");
