@@ -9,7 +9,7 @@ function Alerts() {
   useEffect(() => {
     async function fetchData() {
       const result = await axios(
-        'https://api-v3.mbta.com/alerts?page%5Blimit%5D=10&filter%5Bactivity%5D=BOARD%2CEXIT%2CRIDE&filter%5Bdatetime%5D=NOW&filter%5Bseverity%5D=3%2C%204%2C%2010',
+        'https://api-v3.mbta.com/alerts?filter%5Bactivity%5D=BOARD%2CEXIT%2CRIDE',
       );
       setAlerts(result.data.data);
     }
@@ -30,10 +30,11 @@ function Alerts() {
         <Card.Body>
         <Card.Title>Alert</Card.Title>
         
-        <Card.Text>{alert.attributes.header}{alert.attributes.description}</Card.Text>
+        <Card.Text>Summary: {alert.attributes.short_header}</Card.Text>
+        <Card.Text>{alert.attributes.header} {alert.attributes.description}</Card.Text>
         <Card.Text>{alert.attributes.service_effect}</Card.Text>
         <Card.Text>Severity: {alert.attributes.severity}</Card.Text>
-        <Card.Text>Banner: {alert.attributes.banner}</Card.Text>
+        <Card.Text>Timeframe: {alert.attributes.timeframe}</Card.Text>
         <Card.Text>Updated: {alert.attributes.updated_at}</Card.Text>
         </Card.Body>
       </Card>
