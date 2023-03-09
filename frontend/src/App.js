@@ -6,6 +6,7 @@ import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/navbar";
 import LandingPage from "./components/pages/landingPage";
 import HomePage from "./components/pages/homePage";
+import About from "./components/pages/AboutUs";
 import Login from "./components/pages/loginPage";
 import Signup from "./components/pages/registerPage";
 import PrivateUserProfile from "./components/pages/privateUserProfilePage";
@@ -36,6 +37,7 @@ const App = () => {
           <Route path="/privateUserProfile" element={<PrivateUserProfile />} />
           <Route path="/mbtaAlerts" element={<MBTAAlerts />} />
           <Route path="/routePatterns" element={<RoutePatternsPage />} />
+          <Route path="/About" element={<About />} />
         </Routes>
       </UserContext.Provider>
     </>
