@@ -42,8 +42,8 @@ const HomePage = () => {
                     <span className='favline'> {favline}</span>
                 </h3>
                 <h3>
-                    Dark mode is set to
-                    <span className='darktheme'> {darktheme}</span>
+                    Your favorite route is
+                    <span className='favroute'> {favroute}</span>
                 </h3>
             </div>
             <button onClick={(e) => handleClick(e)}>

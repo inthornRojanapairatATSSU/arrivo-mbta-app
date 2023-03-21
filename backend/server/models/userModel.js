@@ -28,10 +28,6 @@ const newUserSchema = new mongoose.Schema(
       required: true,
       label: "favroute"
     },
-    darktheme: {
-      type: Boolean,
-      default: false
-    },
     date: {
       type: Date,
       default: Date.now,

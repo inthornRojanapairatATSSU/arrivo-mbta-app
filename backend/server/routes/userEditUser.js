@@ -32,14 +32,13 @@ router.post('/editUser', async (req, res) =>
         email : email, 
         password : hashPassword,
         favline : favline,
-        favroute : favroute,
-        darktheme : darktheme
+        favroute : favroute
     } ,function (err, user) {
     if (err){
         console.log(err);
     } else {
         // create and send new access token to local storage
-        const accessToken = generateAccessToken(user._id, email, username, hashPassword, favline, favroute, darktheme)  
+        const accessToken = generateAccessToken(user._id, email, username, hashPassword, favline, favroute)  
         res.header('Authorization', accessToken).send({ accessToken: accessToken })
     }
     });
