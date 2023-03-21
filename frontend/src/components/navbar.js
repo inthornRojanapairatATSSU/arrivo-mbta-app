@@ -31,7 +31,7 @@ export default function Navbar() {
 		    <Nav.Link href = "/routePatterns">Route Patterns</Nav.Link>
         <Nav.Link href = "#" disabled>Secret Train Routes</Nav.Link>
         <NavDropdown title="More" id="navbarScrollingDropdown">
-          <NavDropdown.Item href = "#">About Us</NavDropdown.Item>
+          <NavDropdown.Item href = "/AboutUS">About Us</NavDropdown.Item>
           <NavDropdown.Item href = "#">Patreon (GIVE $$$)</NavDropdown.Item>
           <NavDropdown.Divider></NavDropdown.Divider>
           <NavDropdown.Item href = "#">Kickstarter (NOT SCAM)</NavDropdown.Item>
