@@ -18,14 +18,12 @@ const newUserSchema = new mongoose.Schema(
       type: String,
       min : 8
     },
-    favline: {
+    favline: { // adding "required: true" means we must supply a new field line to enter a new user into the database
       type: String,
-      required: true,
       label: "favline"
     },
     favroute: {
       type: String,
-      required: true,
       label: "favroute"
     },
     date: {
