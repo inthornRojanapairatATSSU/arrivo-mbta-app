@@ -6,6 +6,9 @@ import getUserInfo from "../../utilities/decodeJwt";
 function Alerts() {
   const [user, setUser] = useState({});
   const [alerts, setAlerts] = useState([]);
+  const [selectedDirection, setSelectedDirection] = useState(null);
+  const [filterId, setFilterId] = useState('');
+  const [filterName, setFilterName] = useState('');
 
   useEffect(() => {
     setUser(getUserInfo())
@@ -18,34 +21,72 @@ function Alerts() {
     fetchData();
   }, []);
 
+  const handleDirectionChange = (event) => {
+    setSelectedDirection(event.target.value === '' ? null : event.target.value);
+  };
+
+  const handleFilterIdChange = (event) => {
+    setFilterId(event.target.value);
+  };
+
+  const handleFilterNameChange = (event) => {
+    setFilterName(event.target.value);
+  }
+
+  const filterAlerts = (alert) => {
+    if (selectedDirection !== null && alert.attributes.direction_id.toString() !== selectedDirection) {
+      return false;
+    }
+    if (filterId !== '' && !alert.id.includes(filterId)) {
+      return false;
+    }
+    if (filterName !== '' && !alert.attributes.name.includes(filterName)) {
+      return false;
+    }
+    return true;
+  }
+
   if (!user) return (<div><h4>Log in to view this page.</h4></div>)
   return (
     <div>
-      {alerts.map(alert => (
+      <div>
+        <label htmlFor="direction-select">Direction:</label>
+        <select id="direction-select" onChange={handleDirectionChange}>
+          <option value="">All Directions</option>
+          <option value="0">Direction 0</option>
+          <option value="1">Direction 1</option>
+        </select>
+      </div>
+      <div>
+        <label htmlFor="id-filter">ID:</label>
+        <input id="id-filter" type="text" onChange={handleFilterIdChange} value={filterId} />
+      </div>
+      <div>
+        <label htmlFor="name-filter">Name:</label>
+        <input id="name-filter" type="text" onChange={handleFilterNameChange} value={filterName} />
+      </div>
+      {alerts
+        .filter(filterAlerts)
+        .map(alert => (
         <Card
-        body
-        border = "success"
-        outline
-        color="success"
-        className="mx-auto my-2"
-        style={{ width: "40rem" }}
-      >
-        <Card.Body>
-        <Card.Title>Route Patterns!</Card.Title>
-        <Card.Text>Direction ID: {alert.attributes.direction_id}</Card.Text>
-        <Card.Text>{alert.attributes.name}</Card.Text>
-        <Card.Text>Time Description: {alert.attributes.time_desc}</Card.Text>
-        </Card.Body>
-      </Card>
+          key={alert.id}
+          body
+          border="success"
+          outline
+          color="success"
+          className="mx-auto my-2"
+          style={{ width: "40rem" }}
+        >
+          <Card.Body>
+            <Card.Title>Route Patterns!</Card.Title>
+            <Card.Text>Direction ID: {alert.attributes.direction_id}</Card.Text>
+            <Card.Text>ID: {alert.id}</Card.Text>
+            <Card.Text>{alert.attributes.name}</Card.Text>
+            <Card.Text>Time Description: {alert.attributes.time_desc}</Card.Text>
+          </Card.Body>
+        </Card>
       ))}
 
-        <h1>Route Patterns!</h1>
-      {alerts.map(alert => (
-        <div key={alert.id}>
-          <h3>{alert.attributes.name}</h3>
-          <p>{alert.attributes.description}</p>
-        </div>
-      ))}
     </div>
   );
 }
