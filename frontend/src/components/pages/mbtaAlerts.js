@@ -16,7 +16,7 @@ function Alerts() {
 
   const [filterServEff, setfilterServEff] = useState('');
   const [filterSeverity, setFilterSeverity] = useState(null);
-  const [filterDescription, setFilterDescription] = useState('');
+  const [filterSummary, setFilterSummary] = useState('');
 
   useEffect(() => {
     if (light) {
@@ -83,14 +83,14 @@ function Alerts() {
     setFilterSeverity(event.target.value === '' ? null : event.target.value);
   }
 
-  const handleFilterDescChange = (event) => {
-    setFilterDescription(event.target.value);
+  const handleFilterSummaryChange = (event) => {
+    setFilterSummary(event.target.value);
   }
 
   const handleResetFilters = () => {
     setfilterServEff("");
     setFilterSeverity("");
-    setFilterDescription("");
+    setFilterSummary("");
   }
 
   const filterAlerts = (alert) => {
@@ -100,8 +100,11 @@ function Alerts() {
     if (filterSeverity !== null && alert.attributes.severity.toString() !== filterSeverity) {
       return false;
     }
-    if (filterDescription !== null && !alert.attributes.short_header.includes(filterDescription)) {
-      return false;
+    if (filterSummary === "") {
+      return true;
+    } else {
+      const regex = new RegExp(`\\b${filterSummary}\\b`, "i");
+      return regex.test(alert.attributes.short_header);
     }
     return true;
   }
@@ -110,15 +113,15 @@ function Alerts() {
   return (
     <div style={backgroundStyling}>
       <div className="container">
-        <div class="form-check form-switch">
+        <div class="form-check form-switch d-flex justify-content-center">
           <input
-            class="form-check-input"
+            class="form-check-input text-center"
             type="checkbox"
             id="flexSwitchCheckDefault"
             onChange={() => {
               setLight(!light);
             }}
-          />
+          /> &nbsp;
           <label
             class="form-check-label"
             for="flexSwitchCheckDefault"
@@ -135,13 +138,13 @@ function Alerts() {
         <h2 className="text-center">Filters</h2>
         <div className="text-center">
           <label htmlFor="service-effect-filter">Service Effect: </label>&nbsp;
-          <input id="service-effect-filter" type="text" onChange={handleFilterServiceEffectChange} value={filterServEff} />
+          <input id="service-effect-filter" type="text" onChange={handleFilterServiceEffectChange} value={filterServEff} style={{ width: "100px" }} />
           &nbsp; &nbsp; &nbsp;
-          <label htmlFor="severity-filter">Severity (1-10): </label> &nbsp;
-          <input id="severity-filter" type="text" onChange={handleFilterSeverityChange} value={filterSeverity} />
+          <label htmlFor="severity-filter">Severity: </label> &nbsp;
+          <input id="severity-filter" type="number" min="1" max="10" onChange={handleFilterSeverityChange} value={filterSeverity} style={{ width: "50px" }} />
           &nbsp; &nbsp; &nbsp;
-          <label htmlFor="description-filter"> Description: </label> &nbsp;
-          <input id="description-filter" type="text" onChange={handleFilterDescChange} value={filterDescription} />
+          <label htmlFor="summary-filter"> Summary: </label> &nbsp;
+          <input id="summary-filter" type="text" onChange={handleFilterSummaryChange} value={filterSummary} />
         </div> &nbsp;
         <div className="text-center">
           <button onClick={handleResetFilters}>Reset</button>

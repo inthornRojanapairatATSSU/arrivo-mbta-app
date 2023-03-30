@@ -7,9 +7,9 @@ function Alerts() {
   const [user, setUser] = useState({});
   const [alerts, setAlerts] = useState([]);
   const [filterDirectionID, setFilterDirectionID] = useState(null);
+  const [filterName, setFilterName] = useState('');
   const directionSelectRef = useRef();
   const [filterId, setFilterId] = useState('');
-  const [filterName, setFilterName] = useState('');
 
   useEffect(() => {
     setUser(getUserInfo())
@@ -22,6 +22,10 @@ function Alerts() {
     fetchData();
   }, []);
 
+  const handleFilterNameChange = (event) => {
+    setFilterName(event.target.value);
+  };
+
   const handleDirectionChange = (event) => {
     setFilterDirectionID(event.target.value === '' ? null : event.target.value);
   };
@@ -30,15 +34,11 @@ function Alerts() {
     setFilterId(event.target.value);
   };
 
-  const handleFilterNameChange = (event) => {
-    setFilterName(event.target.value);
-  }
-
   const handleResetFilters = () => {
-    directionSelectRef.current.value = "";
-    setFilterDirectionID(null);
-    setFilterId("");
     setFilterName("");
+    setFilterDirectionID(null);
+    directionSelectRef.current.value = "";
+    setFilterId("");
   }
 
   const filterRoutePatterns = (alert) => {
@@ -59,18 +59,18 @@ function Alerts() {
     <div className="container">
       <h2 className="text-center">Filters</h2>
       <div className="text-center">
+        <label htmlFor="name-filter">Name:</label> &nbsp;
+        <input id="name-filter" type="text" onChange={handleFilterNameChange} value={filterName} />
+        &nbsp;&nbsp;&nbsp;
         <label htmlFor="direction-select">Direction:</label> &nbsp;
-        <select id="direction-select" onChange={handleDirectionChange} ref={directionSelectRef}>
+        <select id="direction-select" onChange={handleDirectionChange} ref={directionSelectRef} style={{ width: "100px" }}>
           <option value="">--</option>
           <option value="0">Inbound</option>
           <option value="1">Outbound</option>
         </select>
         &nbsp;&nbsp;&nbsp;
         <label htmlFor="id-filter">ID: </label> &nbsp;
-        <input id="id-filter" type="text" onChange={handleFilterIdChange} value={filterId} />
-        &nbsp;&nbsp;&nbsp;
-        <label htmlFor="name-filter">Name:</label> &nbsp;
-        <input id="name-filter" type="text" onChange={handleFilterNameChange} value={filterName} />
+        <input id="id-filter" type="text" onChange={handleFilterIdChange} value={filterId} style={{ width: "100px" }} />
       </div>
       &nbsp;
       <div className="text-center">
