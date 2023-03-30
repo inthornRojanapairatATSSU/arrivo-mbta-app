@@ -45,10 +45,10 @@ function Alerts() {
     if (filterDirectionID !== null && alert.attributes.direction_id.toString() !== filterDirectionID) {
       return false;
     }
-    if (filterId !== '' && !alert.id.includes(filterId)) {
+    if (filterId !== '' && !alert.id.toLowerCase().includes(filterId.toLowerCase())) {
       return false;
     }
-    if (filterName !== '' && !alert.attributes.name.includes(filterName)) {
+    if (filterName !== '' && !alert.attributes.name.toLowerCase().includes(filterName.toLowerCase())) {
       return false;
     }
     return true;
@@ -69,7 +69,7 @@ function Alerts() {
         <label htmlFor="id-filter">ID: </label> &nbsp;
         <input id="id-filter" type="text" onChange={handleFilterIdChange} value={filterId} />
         &nbsp;&nbsp;&nbsp;
-        <label htmlFor="name-filter">Name (case sensitive):</label> &nbsp;
+        <label htmlFor="name-filter">Name:</label> &nbsp;
         <input id="name-filter" type="text" onChange={handleFilterNameChange} value={filterName} />
       </div>
       &nbsp;
@@ -82,25 +82,25 @@ function Alerts() {
         {alerts
           .filter(filterRoutePatterns)
           .map(alert => (
-          <div key={alert.id} className="col-sm-6 col-lg-4">
-            <Card
-              body
-              border="success"
-              outline
-              color="success"
-              className={'mx-auto my-2 text-center'}
-              style={{ width: "75%" }}
-            >
-              <Card.Body>
-                <Card.Title>{alert.attributes.name}</Card.Title>
-                <Card.Text><b>Direction:</b> {alert.attributes.direction_id === 0 ? "Inbound" : "Outbound"}</Card.Text>
-                <Card.Text><b>Route:</b> {alert.relationships.route.data.id}</Card.Text>
-                <Card.Text><b>Time Description:</b> {alert.attributes.time_desc}</Card.Text>
-                <Card.Text><b>ID:</b> {alert.id}</Card.Text>
-              </Card.Body>
-            </Card>
-          </div>
-        ))}
+            <div key={alert.id} className="col-sm-6 col-lg-4">
+              <Card
+                body
+                border="success"
+                outline
+                color="success"
+                className={'mx-auto my-2 text-center'}
+                style={{ width: "75%" }}
+              >
+                <Card.Body>
+                  <Card.Title>{alert.attributes.name}</Card.Title>
+                  <Card.Text><b>Direction:</b> {alert.attributes.direction_id === 0 ? "Inbound" : "Outbound"}</Card.Text>
+                  <Card.Text><b>Route:</b> {alert.relationships.route.data.id}</Card.Text>
+                  <Card.Text><b>Time Description:</b> {alert.attributes.time_desc}</Card.Text>
+                  <Card.Text><b>ID:</b> {alert.id}</Card.Text>
+                </Card.Body>
+              </Card>
+            </div>
+          ))}
       </div>
     </div>
   );
