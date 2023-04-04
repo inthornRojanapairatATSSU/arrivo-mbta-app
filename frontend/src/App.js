@@ -5,13 +5,13 @@ import { Route, Routes } from "react-router-dom";
 // We import all the components we need in our app
 import Navbar from "./components/navbar";
 import LandingPage from "./components/pages/landingPage";
-import HomePage from "./components/pages/homePage";
+import ProfilePage from "./components/pages/profilePage";
 import About from "./components/pages/AboutUs";
 import Login from "./components/pages/loginPage";
 import Signup from "./components/pages/registerPage";
-import PrivateUserProfile from "./components/pages/privateUserProfilePage";
 import MBTAAlerts from "./components/pages/mbtaAlerts";
 import RoutePatternsPage from "./components/pages/routePatterns";
+import EditUserPage from "./components/pages/editUserPage";
 import { createContext, useState, useEffect } from "react";
 import getUserInfo from "./utilities/decodeJwt";
 
@@ -31,13 +31,13 @@ const App = () => {
       <UserContext.Provider value={user}>
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
-          <Route exact path="/home" element={<HomePage />} />
+          <Route exact path="/profile" element={<ProfilePage />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<Signup />} />
-          <Route path="/privateUserProfile" element={<PrivateUserProfile />} />
           <Route path="/mbtaAlerts" element={<MBTAAlerts />} />
           <Route path="/routePatterns" element={<RoutePatternsPage />} />
           <Route path="/About" element={<About />} />
+          <Route path="/editUserPage" element={<EditUserPage />} />
         </Routes>
       </UserContext.Provider>
     </>
