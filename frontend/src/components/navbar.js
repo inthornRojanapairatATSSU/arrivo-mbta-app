@@ -55,7 +55,7 @@ export default function Navbar() {
       </Nav>
       <Nav className="ml-auto">
         <NavDropdown title={username ? username : "Guest"}>
-          <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+          <NavDropdown.Item href="/profile" disabled={!user}>Profile</NavDropdown.Item>
           <NavDropdown.Item href="/editUserPage" disabled={!user}>Edit</NavDropdown.Item>
         </NavDropdown>
         
