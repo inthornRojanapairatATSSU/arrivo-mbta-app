@@ -31,7 +31,7 @@ const EditUserPage = () =>{
   }
 
   // initialize form values and get userId on render
-  const [form, setValues] = useState({userId : "", username: "", email: "", password: "" })
+  const [form, setValues] = useState({userId : "", username: "", email: "", password: "", favroute: "" })
   useEffect(() => {
     setValues({userId : getUserInfo().id})
   }, [])
@@ -126,6 +126,19 @@ const EditUserPage = () =>{
              <Form.Control.Feedback type='invalid'>
               { errors.password }
              </Form.Control.Feedback>
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formFavroute">
+            <Form.Label>Favorite route</Form.Label>
+            <Form.Control type="text" placeholder="Enter new favorite route" 
+                        id="favroute"
+                        value={form.favroute}
+                        onChange={handleChange}
+                        isInvalid = { !!errors.favroute }
+            />
+            <Form.Control.Feedback type='invalid'>
+              { errors.password }
+            </Form.Control.Feedback>
           </Form.Group>
 
         <Row>
