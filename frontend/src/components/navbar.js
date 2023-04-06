@@ -42,14 +42,15 @@ export default function Navbar() {
     <Container>
       <ReactNavbar.Brand href="/">ARRIVO</ReactNavbar.Brand>
       <Nav className="me-auto">
-        <Nav.Link href="/">Start</Nav.Link>
 		    <Nav.Link href = "/mbtaAlerts">Alerts</Nav.Link>
 		    <Nav.Link href = "/routePatterns">Route Patterns</Nav.Link>
         <Nav.Link href = "#" disabled>Secret Train Routes</Nav.Link>
         <NavDropdown title="More" id="navbarScrollingDropdown">
           <NavDropdown.Item href = "/AboutUs">About Us</NavDropdown.Item>
-          <NavDropdown.Item href = "#">Patreon (GIVE $$$)</NavDropdown.Item>
           <NavDropdown.Divider></NavDropdown.Divider>
+          <NavDropdown.Item href = "https://react-bootstrap.github.io/components/cards/" target="_blank">React Bootstrap</NavDropdown.Item>
+          <NavDropdown.Item href = "https://api-v3.mbta.com/docs/swagger/index.html" target="_blank">Swagger UI</NavDropdown.Item>
+          <NavDropdown.Item href = "#">Patreon (GIVE $$$)</NavDropdown.Item>
           <NavDropdown.Item href = "#">Kickstarter (NOT SCAM)</NavDropdown.Item>
         </NavDropdown>
       </Nav>
