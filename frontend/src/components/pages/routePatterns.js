@@ -151,7 +151,7 @@ function Alerts() {
             <Button variant="secondary" onClick={handleClose}>
               Cancel
             </Button>
-            <Button variant="primary" onClick={handleSubmit} onHide={handleClose}>
+            <Button variant="primary" onClick={(e) => {handleSubmit(e); handleClose();}}>
               Submit
             </Button>
           </Modal.Footer>
