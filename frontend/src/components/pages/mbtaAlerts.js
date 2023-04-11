@@ -14,9 +14,12 @@ function Alerts() {
   const [bgColor, setBgColor] = useState(SECONDARY_COLOR);
   const [bgText, setBgText] = useState("Light Mode");
 
+  const [filteredAlerts, setFilteredAlerts] = useState([]);
   const [filterServEff, setfilterServEff] = useState('');
   const [filterSeverity, setFilterSeverity] = useState(null);
   const [filterSummary, setFilterSummary] = useState('');
+  const visibleAlerts = filterSummary || filterServEff || filterSeverity ? filteredAlerts : alerts;
+
 
   useEffect(() => {
     if (light) {
@@ -27,6 +30,11 @@ function Alerts() {
       setBgText("Light mode?");
     }
   }, [light]);
+
+  useEffect(() => {
+    const filtered = alerts.filter(filterAlerts);
+    setFilteredAlerts(filtered);
+  }, [alerts, filterServEff, filterSeverity, filterSummary]);
 
   let labelStyling = {
     color: PRIMARY_COLOR,
@@ -89,9 +97,10 @@ function Alerts() {
 
   const handleResetFilters = () => {
     setfilterServEff("");
-    setFilterSeverity("");
+    setFilterSeverity(null);
     setFilterSummary("");
-  }
+    setFilteredAlerts(alerts);
+  }  
 
   const filterAlerts = (alert) => {
     if (filterServEff !== null && !alert.attributes.service_effect.toLowerCase().includes(filterServEff.toLowerCase())) {
@@ -106,13 +115,12 @@ function Alerts() {
       const regex = new RegExp(`\\b${filterSummary}\\b`, "i");
       return regex.test(alert.attributes.short_header);
     }
-    return true;
   }
 
   if (!user) return (<div><h4>Log in to view this page.</h4></div>)
   return (
     <div style={backgroundStyling}>
-      <div className="container">
+      <div className="container"> &nbsp;
         <div class="form-check form-switch d-flex justify-content-center">
           <input
             class="form-check-input text-center"

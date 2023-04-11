@@ -8,7 +8,7 @@ const PRIMARY_COLOR = "#cc5c99";
 const SECONDARY_COLOR = "#0c0c1f";
 const url = "http://localhost:8081/user/signup";
 const Register = () => {
-  const [data, setData] = useState({ username: "", email: "", password: "" });
+  const [data, setData] = useState({ username: "", email: "", password: "", favroute: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [light, setLight] = useState(false);
@@ -101,7 +101,19 @@ const Register = () => {
                     name="password"
                     placeholder="Password"
                     onChange={handleChange}
+                  /> &nbsp;
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                  <Form.Label style={labelStyling}>Favorite Route</Form.Label>
+                  <Form.Control
+                    type="favroute"
+                    name="favroute"
+                    onChange={handleChange}
+                    placeholder="Enter favorite route"
                   />
+                  <Form.Text className="text-muted">
+                    We just might watch you walk to the train
+                  </Form.Text>
+                </Form.Group>
                 </Form.Group>
                 <div class="form-check form-switch">
                   <input

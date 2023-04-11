@@ -31,7 +31,7 @@ const EditUserPage = () =>{
   }
 
   // initialize form values and get userId on render
-  const [form, setValues] = useState({userId : "", username: "", email: "", password: "" })
+  const [form, setValues] = useState({userId : "", username: "", email: "", password: "", favroute: "" })
   useEffect(() => {
     setValues({userId : getUserInfo().id})
   }, [])
@@ -58,7 +58,7 @@ const EditUserPage = () =>{
         const { accessToken } = res;
         //store token in localStorage
         localStorage.setItem("accessToken", accessToken);
-        navigate("/privateuserprofile");
+        navigate("/profile");
       } catch (error) {
       if (
         error.response &&
@@ -79,12 +79,12 @@ const EditUserPage = () =>{
 
   // handle cancel button
   const handleCancel = async => {
-    navigate("/privateuserprofile");
+    navigate("/profile");
   }
 
   return(
-    <div>
-      <Card body outline color="success" className="mx-1 my-2" style={{ width: '30rem' }}>
+    <div> &nbsp;
+      <Card body outline color="success" className="mx-auto my-2" style={{ width: '30rem' }}>
         <Card.Title>Edit User Information</Card.Title>
         <Card.Body> 
         <Form>
@@ -128,6 +128,19 @@ const EditUserPage = () =>{
              </Form.Control.Feedback>
           </Form.Group>
 
+          <Form.Group className="mb-3" controlId="formFavroute">
+            <Form.Label>Favorite route</Form.Label>
+            <Form.Control type="text" placeholder="Enter new favorite route" 
+                        id="favroute"
+                        value={form.favroute}
+                        onChange={handleChange}
+                        isInvalid = { !!errors.favroute }
+            />
+            <Form.Control.Feedback type='invalid'>
+              { errors.password }
+            </Form.Control.Feedback>
+          </Form.Group>
+
         <Row>
           <Col>
           <Button variant="primary" type="submit" onClick={handleSubmit}>
@@ -145,7 +158,7 @@ const EditUserPage = () =>{
         </Form>
         </Card.Body>
       </Card>
-      </div>
+    </div>
   )
 }
 
