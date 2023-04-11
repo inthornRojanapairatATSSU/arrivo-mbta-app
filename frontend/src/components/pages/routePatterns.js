@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
 import getUserInfo from "../../utilities/decodeJwt";
+import { Button, Modal, ModalHeader, ModalBody, Form, FormControl } from 'react-bootstrap';
 
 function Alerts() {
   const [user, setUser] = useState({});
@@ -10,6 +11,14 @@ function Alerts() {
   const [filterName, setFilterName] = useState('');
   const directionSelectRef = useRef();
   const [filterId, setFilterId] = useState('');
+
+  const { username } = user;
+  const [stationName, setStationName] = useState("");
+  const [comment, setComment] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     setUser(getUserInfo())
@@ -54,6 +63,35 @@ function Alerts() {
     return true;
   }
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const commentData = {
+      username,
+      stationName,
+      comment
+    };
+    try {
+      const response = await fetch("http://localhost:8081/comment/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(commentData),
+      });
+      if (response.ok) {
+        // Handle success, show modal
+        setShowModal(true);
+        setStationName("");
+        setComment("");
+      } else {
+        // Handle errors, e.g., show an error message
+        console.error("Failed to submit comment.");
+      }
+    } catch (error) {
+      console.error("Failed to submit comment:", error);
+    }
+  };
+
   if (!user) return (<div><h4>Log in to view this page.</h4></div>)
   return (
     <div className="container">
@@ -77,6 +115,90 @@ function Alerts() {
         <button onClick={handleResetFilters}>Reset</button>
       </div>
       &nbsp;&nbsp;&nbsp;
+
+      <h2 className="text-center">Feedback!</h2>
+      <div className="text-center">
+        <Button onClick={handleShow}>Click Me!</Button>
+        <Modal
+          show={show}
+          onHide={handleClose}
+          backdrop="static"
+        >
+          <ModalHeader closeButton>Feedback Window</ModalHeader>
+          <ModalBody>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group controlId="formStationName">
+                <Form.Label>Station Name</Form.Label>
+                <FormControl
+                  type="text"
+                  value={stationName}
+                  onChange={(e) => setStationName(e.target.value)}
+                  placeholder="Enter station name"
+                />
+              </Form.Group>
+              <Form.Group controlId="formComment">
+                <Form.Label>Feedback</Form.Label>
+                <FormControl
+                  type="text"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  placeholder="Enter your feedback here"
+                />
+              </Form.Group>
+            </Form>
+          </ModalBody>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button variant="primary" onClick={handleSubmit} onHide={handleClose}>
+              Submit
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        {showModal && (
+        <div
+          className="modal fade show"
+          tabIndex="-1"
+          role="dialog"
+          style={{ display: "block" }}
+        >
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Comment Added</h5>
+                <button
+                  type="button"
+                  className="close"
+                  onClick={() => setShowModal(false)}
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <p>Comment has been successfully added.</p>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => setShowModal(false)}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {showModal && (
+        <div
+          className="modal-backdrop fade show"
+          onClick={() => setShowModal(false)}
+        />
+      )}
+      </div> &nbsp;
+
       <h2 className="text-center">Route Patterns!</h2>
       <div className="row">
         {alerts
