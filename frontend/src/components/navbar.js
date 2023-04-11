@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import ReactNavbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import MBTAlogo from "./logo512.png"
+
 // Here, we display our Navbar
 export default function Navbar() {
   // We are pulling in the user's info but not using it for now.
@@ -22,8 +22,9 @@ export default function Navbar() {
   return (
     <ReactNavbar bg="primary" variant="dark">
     <Container>
-      <ReactNavbar.Brand href="/"><img src={MBTAlogo} height={30} width={30} alt="BigCo Inc. logo"/></ReactNavbar.Brand>
+      <ReactNavbar.Brand href="/">ARRIVO</ReactNavbar.Brand>
       <Nav className="me-auto">
+        <Nav.Link href="/">Start</Nav.Link>
         <Nav.Link href="/home">Home</Nav.Link>
         <Nav.Link href="/privateUserProfile">Profile</Nav.Link>
 		    <Nav.Link href = "/mbtaAlerts">Alerts</Nav.Link>
