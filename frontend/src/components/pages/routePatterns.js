@@ -12,7 +12,7 @@ function Alerts() {
   const directionSelectRef = useRef();
   const [filterId, setFilterId] = useState('');
 
-  const { username } = user;
+  const { username } = user || {}; // checks if the user is logged in or not
   const [stationName, setStationName] = useState("");
   const [comment, setComment] = useState("");
   const [showModal, setShowModal] = useState(false);
