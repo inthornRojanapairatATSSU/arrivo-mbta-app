@@ -12,7 +12,7 @@ import Signup from "./components/pages/registerPage";
 import MBTAAlerts from "./components/pages/mbtaAlerts";
 import RoutePatternsPage from "./components/pages/routePatterns";
 import EditUserPage from "./components/pages/editUserPage";
-import AddCommentPage from "./components/pages/AddCommentPage";
+
 import { createContext, useState, useEffect } from "react";
 import getUserInfo from "./utilities/decodeJwt";
 
@@ -39,7 +39,6 @@ const App = () => {
           <Route path="/routePatterns" element={<RoutePatternsPage />} />
           <Route path="/About" element={<About />} />
           <Route path="/editUserPage" element={<EditUserPage />} />
-          <Route path="/addCommentPage" element={<AddCommentPage />} />
         </Routes>
       </UserContext.Provider>
     </>

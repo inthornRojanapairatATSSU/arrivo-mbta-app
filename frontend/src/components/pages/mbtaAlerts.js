@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Card from 'react-bootstrap/Card';
+import { Container, Button, ButtonGroup, Card } from 'react-bootstrap';
 import axios from 'axios';
 import getUserInfo from "../../utilities/decodeJwt";
 
@@ -14,12 +14,14 @@ function Alerts() {
   const [bgColor, setBgColor] = useState(SECONDARY_COLOR);
   const [bgText, setBgText] = useState("Light Mode");
 
+  const [info, setInfo] = useState('');
+
   const [filteredAlerts, setFilteredAlerts] = useState([]);
   const [filterServEff, setfilterServEff] = useState('');
+  const [filterLifecycle, setFilterLifecycle] = useState(null);
   const [filterSeverity, setFilterSeverity] = useState(null);
   const [filterSummary, setFilterSummary] = useState('');
   const visibleAlerts = filterSummary || filterServEff || filterSeverity ? filteredAlerts : alerts;
-
 
   useEffect(() => {
     if (light) {
@@ -83,8 +85,20 @@ function Alerts() {
     fetchData();
   }, []);
 
+  const handleInfoClick = (description) => {
+    setInfo(description);
+  }
+
+  const handleInfoClear = () => {
+    setInfo('');
+  }
+
   const handleFilterServiceEffectChange = (event) => {
     setfilterServEff(event.target.value);
+  }
+
+  const handleFilterLifecycleChange = (event) => {
+    setFilterLifecycle(event.target.value);
   }
 
   const handleFilterSeverityChange = (event) => {
@@ -97,13 +111,16 @@ function Alerts() {
 
   const handleResetFilters = () => {
     setfilterServEff("");
-    setFilterSeverity(null);
+    setFilterSeverity('');
     setFilterSummary("");
     setFilteredAlerts(alerts);
   }  
 
   const filterAlerts = (alert) => {
     if (filterServEff !== null && !alert.attributes.service_effect.toLowerCase().includes(filterServEff.toLowerCase())) {
+      return false;
+    }
+    if (filterLifecycle !== null && !alert.attributes.lifecycle.toLowerCase().includes(filterLifecycle.toLowerCase())) {
       return false;
     }
     if (filterSeverity !== null && alert.attributes.severity.toString() !== filterSeverity) {
@@ -143,10 +160,33 @@ function Alerts() {
             {error}
           </div>
         )}
+
+        <h2 className="text-center">Info</h2>
+        <div className="text-center">
+          <Container className="ml-auto">
+            <ButtonGroup aria-label="Info button group">
+              <Button variant="info" onClick={() => handleInfoClick('The big bold text displayed at the top of the card. This header summarizes the service and the impact to that service.')}>Service Effect</Button>
+              <Button variant="info" onClick={() => handleInfoClick('How severe the alert is from least (0) to most (10) severe.')}>Severity</Button>
+              <Button variant="info" onClick={() => handleInfoClick('Identifies whether the alert is new or old, in effect, or upcoming. Its values are NEW, ONGOING, ONGOING_UPCOMING, and UPCOMING.')}>Lifecycle</Button>
+              <Button variant="info" onClick={() => handleInfoClick('This summarizes when an alert is in effect.')}>Timeframe</Button>
+              <Button variant="secondary" onClick={handleInfoClear}>Clear</Button>
+            </ButtonGroup>
+            {info && (
+              <div className="mt-3">
+                <h4>Description:</h4>
+                <p>{info}</p>
+              </div>
+            )}
+          </Container>
+        </div> &nbsp;
+
         <h2 className="text-center">Filters</h2>
         <div className="text-center">
           <label htmlFor="service-effect-filter">Service Effect: </label>&nbsp;
           <input id="service-effect-filter" type="text" onChange={handleFilterServiceEffectChange} value={filterServEff} style={{ width: "100px" }} />
+          &nbsp; &nbsp; &nbsp;
+          <label htmlFor="lifecycle-filter">Lifecycle: </label>&nbsp;
+          <input id="lifecycle-filter" type="text" onChange={handleFilterLifecycleChange} value={filterLifecycle} style={{ width: "100px" }} />
           &nbsp; &nbsp; &nbsp;
           <label htmlFor="severity-filter">Severity: </label> &nbsp;
           <input id="severity-filter" type="number" min="1" max="10" onChange={handleFilterSeverityChange} value={filterSeverity} style={{ width: "50px" }} />
@@ -155,8 +195,9 @@ function Alerts() {
           <input id="summary-filter" type="text" onChange={handleFilterSummaryChange} value={filterSummary} />
         </div> &nbsp;
         <div className="text-center">
-          <button onClick={handleResetFilters}>Reset</button>
+          <Button variant="secondary" onClick={handleResetFilters}>Reset</Button>
         </div> &nbsp;
+
         <h2 className="text-center">Alerts!</h2>
         <div className="row">
           {alerts
@@ -175,8 +216,9 @@ function Alerts() {
                     <Card.Title>{alert.attributes.service_effect}</Card.Title>
                     <Card.Text><b>Summary:</b> {alert.attributes.short_header}</Card.Text>
                     <Card.Text><b>{alert.attributes.header}</b> {alert.attributes.description}</Card.Text>
-                    <Card.Text>Severity: {alert.attributes.severity}</Card.Text>
-                    <Card.Text>Timeframe: {alert.attributes.timeframe}</Card.Text>
+                    <Card.Text><b>Severity:</b> {alert.attributes.severity}</Card.Text>
+                    <Card.Text><b>Lifecycle:</b> {alert.attributes.lifecycle}</Card.Text>
+                    <Card.Text><b>Timeframe: </b> {alert.attributes.timeframe}</Card.Text>
                     <Card.Text><i>Updated:</i> {alert.attributes.updated_at}</Card.Text>
                   </Card.Body>
                 </Card>
