@@ -2,10 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
 import getUserInfo from "../../utilities/decodeJwt";
-import { Container, Button, ButtonGroup, Modal, ModalHeader, ModalBody, Form, FormControl } from 'react-bootstrap';
+import { Container, Button, ButtonGroup, Modal, ModalHeader, ModalBody, Form, FormControl, Badge, Row, Col } from 'react-bootstrap';
+import "./App.css";
 
 function Alerts() {
   const [user, setUser] = useState({});
+
+  const [isTextWindowOpen, setIsTextWindowOpen] = useState(false);
+  const textWindowRef = useRef(null);
+  const [comments, setComments] = useState([]);
 
   const [info, setInfo] = useState('');
 
@@ -34,6 +39,58 @@ function Alerts() {
     }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    // Fetch comments from MongoDB
+    const fetchComments = async () => {
+      try {
+        const response = await axios.get("http://localhost:8081/comment/getAll");
+        // Sort comments by date in descending order
+        const sortedComments = response.data.sort(
+          (a, b) => new Date(b.date) - new Date(a.date)
+        );
+        setComments(sortedComments);
+      } catch (error) {
+        console.error("Failed to fetch comments:", error);
+      }
+    };
+
+    // Fetch comments initially
+    fetchComments();
+
+    // Set up interval to fetch comments every 10 seconds
+    const intervalId = setInterval(fetchComments, 10000);
+
+    // Clean up interval on component unmount
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  // Helper function to format date string as "MM-DD-YYYY HH:mm:ss"
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const formattedDate = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+    return formattedDate;
+  };
+
+  const handleArrowClick = () => {
+    setIsTextWindowOpen(!isTextWindowOpen);
+  };
+  
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (textWindowRef.current && !textWindowRef.current.contains(event.target)) {
+        setIsTextWindowOpen(false);
+      }
+    };
+    if (isTextWindowOpen) {
+      document.addEventListener('click', handleOutsideClick);
+    }
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, [isTextWindowOpen]);
 
   const handleInfoClick = (description) => {
     setInfo(description);
@@ -114,7 +171,47 @@ function Alerts() {
 
   if (!user) return (<div><h4>Log in to view this page.</h4></div>)
   return (
+
     <div className="container"> &nbsp;
+
+      <div className="Comments">
+        <div className="Arrow" onClick={handleArrowClick}>
+          {isTextWindowOpen ? (
+            <i className="fas fa-chevron-left"></i>
+          ) : (
+            <i className="fas fa-chevron-right"></i>
+          )}
+        </div>
+        {isTextWindowOpen && (
+          <div className="TextWindow" ref={textWindowRef}>
+            <h3>Comments</h3>
+            <p>
+              This is sorted by most recent.
+            </p>
+              <Container>
+                <Col>
+                  {comments.map((comment) => (
+                    <Col key={comment._id} md={12}>
+                      <Card className="mb-2">
+                        <Card.Body>
+                          <Card.Title>Username: {comment.username}</Card.Title>
+                          <Card.Subtitle className="mb-2 text-muted">
+                            Station Name: {comment.stationName}
+                          </Card.Subtitle>
+                          <Card.Text>Comment: {comment.comment}</Card.Text>
+                          <Card.Text>Date: {formatDate(comment.date)}</Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  ))}
+                </Col> &nbsp;
+                <p>
+                  Blank space.
+                </p>
+              </Container>
+          </div>
+        )}
+      </div>
 
       <h2 className="text-center">Info</h2>
         <div className="text-center">

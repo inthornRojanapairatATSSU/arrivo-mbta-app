@@ -1,0 +1,44 @@
+.App {
+    position: relative;
+  }
+  
+  .Arrow {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    cursor: pointer;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .Arrow:hover {
+    background-color: #0056b3;
+  }
+  
+  .TextWindow {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 400px;
+    height: 110%;
+    background-color: #f8f9fa;
+    padding: 20px;
+    overflow-y: auto;
+    z-index: 9999;
+  }
+  
+  .TextWindow h3 {
+    margin-top: 0;
+  }
+  
+  .TextWindow p {
+    margin-top: 10px;
+  }
+  
+  .Badge {
+    margin-top: 10px;
+  }
+  
