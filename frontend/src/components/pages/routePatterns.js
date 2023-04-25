@@ -2,10 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
 import getUserInfo from "../../utilities/decodeJwt";
-import { Container, Button, ButtonGroup, Modal, ModalHeader, ModalBody, Form, FormControl, Badge, Row, Col } from 'react-bootstrap';
+import { Container, Button, ButtonGroup, Modal, ModalHeader, ModalBody, Form, FormControl, Col } from 'react-bootstrap';
 import "./App.css";
 
-function Alerts() {
+function RoutePatterns() {
+  
   const [user, setUser] = useState({});
 
   const [isTextWindowOpen, setIsTextWindowOpen] = useState(false);
@@ -70,14 +71,20 @@ function Alerts() {
   // Helper function to format date string as "MM-DD-YYYY HH:mm:ss"
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const formattedDate = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+    const hour = date.getHours() % 12 || 12; // Convert to 12-hour format
+    const minute = date.getMinutes().toString().padStart(2, '0');
+    const second = date.getSeconds().toString().padStart(2, '0');
+    const ampm = date.getHours() >= 12 ? 'PM' : 'AM';
+    const formattedDate = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()} ${hour}:${minute}:${second} ${ampm}`;
     return formattedDate;
   };
 
+  // Opens the comments window
   const handleArrowClick = () => {
     setIsTextWindowOpen(!isTextWindowOpen);
   };
   
+  // Clicking outside of the comments window closes the window
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (textWindowRef.current && !textWindowRef.current.contains(event.target)) {
@@ -368,4 +375,4 @@ function Alerts() {
   );
 }
 
-export default Alerts;
+export default RoutePatterns;

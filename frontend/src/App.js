@@ -12,6 +12,8 @@ import Signup from "./components/pages/registerPage";
 import MBTAAlerts from "./components/pages/mbtaAlerts";
 import RoutePatternsPage from "./components/pages/routePatterns";
 import EditUserPage from "./components/pages/editUserPage";
+import UserCommentsPage from "./components/pages/userCommentsPage.js";
+import ViewCommentsPage from "./components/pages/viewCommentsPage";
 
 import { createContext, useState, useEffect } from "react";
 import getUserInfo from "./utilities/decodeJwt";
@@ -39,12 +41,12 @@ const App = () => {
           <Route path="/routePatterns" element={<RoutePatternsPage />} />
           <Route path="/About" element={<About />} />
           <Route path="/editUserPage" element={<EditUserPage />} />
+          <Route path="/commentsPage" element={<UserCommentsPage />} />
+          <Route path="/commentsPage2" element={<ViewCommentsPage />} />
         </Routes>
       </UserContext.Provider>
     </>
   );
 };
-
-
 
 export default App

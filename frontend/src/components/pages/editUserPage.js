@@ -82,6 +82,36 @@ const EditUserPage = () =>{
     navigate("/profile");
   }
 
+  // initialize checkbox state
+const [keepUsername, setKeepUsername] = useState(false);
+const [keepEmail, setKeepEmail] = useState(false);
+
+// handle keep username checkbox change
+const handleKeepUsernameChange = () => {
+  setKeepUsername(!keepUsername);
+  if (!keepUsername) {
+    setValues({ ...form, username: getUserInfo().username });
+  } else {
+    setValues({ ...form, username: "" });
+  }
+  if (form.username && !keepUsername) {
+    setValues({ ...form, username: "" });
+  }
+};
+
+// handle keep email checkbox change
+const handleKeepEmailChange = () => {
+  setKeepEmail(!keepEmail);
+  if (!keepEmail) {
+    setValues({ ...form, email: getUserInfo().email });
+  } else {
+    setValues({ ...form, email: "" });
+  }
+  if (form.email && !keepEmail) {
+    setValues({ ...form, email: "" });
+  }
+};
+
   return(
     <div> &nbsp;
       <Card body outline color="success" className="mx-auto my-2" style={{ width: '30rem' }}>
@@ -91,15 +121,27 @@ const EditUserPage = () =>{
 
           <Form.Group className="mb-3" controlId="formName">
             <Form.Label>Username</Form.Label>
-            <Form.Control type="text" placeholder="Enter new username" 
-                        id="username"
-                        value={form.username}
-                        onChange={handleChange}
-                        isInvalid={ !!errors.name }
+            <Form.Control
+              type="text"
+              placeholder="Enter new username"
+              id="username"
+              value={form.username}
+              onChange={handleChange}
+              isInvalid={!!errors.name}
+              disabled={keepUsername}
             />
-            <Form.Control.Feedback type='invalid'>
-              { errors.name }
+            <Form.Control.Feedback type="invalid">
+              {errors.name}
             </Form.Control.Feedback>
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formKeepUsername">
+            <Form.Check
+              type="checkbox"
+              label="Keep username"
+              checked={keepUsername}
+              onChange={handleKeepUsernameChange}
+            />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formEmail">
@@ -109,15 +151,25 @@ const EditUserPage = () =>{
                          value={form.email}
                          onChange={handleChange}
                          isInvalid = { !!errors.email }
+                         disabled = { keepEmail }
              />
              <Form.Control.Feedback type='invalid'>
               { errors.email }
              </Form.Control.Feedback>
           </Form.Group>
 
+          <Form.Group className="mb-3" controlId="formKeepEmail">
+            <Form.Check
+              type="checkbox"
+              label="Keep email"
+              checked={keepEmail}
+              onChange={handleKeepEmailChange}
+            />
+          </Form.Group>
+
           <Form.Group className="mb-3" controlId="formPassword">
              <Form.Label>Password</Form.Label>
-             <Form.Control type="text" placeholder="Enter new password" 
+             <Form.Control type="password" placeholder="Enter new password" 
                          id="password"
                          value={form.password}
                          onChange={handleChange}

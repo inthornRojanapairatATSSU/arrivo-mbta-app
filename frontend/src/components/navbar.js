@@ -43,6 +43,7 @@ export default function Navbar() {
       <Nav className="me-auto">
 		    <Nav.Link href = "/mbtaAlerts">Alerts</Nav.Link>
 		    <Nav.Link href = "/routePatterns">Route Patterns</Nav.Link>
+        <Nav.Link href = "/commentsPage" disabled={!user}>Comments</Nav.Link>
         <Nav.Link href = "#" disabled>Secret Train Routes</Nav.Link>
         <NavDropdown title="More" id="navbarScrollingDropdown">
           <NavDropdown.Item href = "/AboutUs">About Us</NavDropdown.Item>

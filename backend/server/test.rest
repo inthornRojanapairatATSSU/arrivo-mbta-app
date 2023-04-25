@@ -37,7 +37,7 @@ GET  http://localhost:8081/user/getUserById
 Content-Type: application/json 
 
 {
-    "userId" : "635ab8dfc407faf9f73deaf1"
+    "userId" : "6419b49e09dfe3eefb495228"
 }
 
 ###
@@ -60,7 +60,6 @@ GET  http://localhost:8081/comment/getAll
 Content-Type: application/json
 
 ###
-
 POST http://localhost:8081/comment/add
 Content-Type: application/json 
 
@@ -69,3 +68,33 @@ Content-Type: application/json
     "stationName" : "Aberdeen Ave - Harvard Station",
     "comment" : "this station slaps"
 }
+
+###
+POST http://localhost:8081/comment/editComment
+Content-Type: application/json
+
+{
+    "_id" : "643e98aaf948950b01f94362",
+    "username" : "ArrivoUser",
+    "stationName" : "Alewife - Kendall/MIT",
+    "comment" : "This comment has been removed by the Comment Police"
+}
+
+###
+POST http://localhost:8081/comment/deleteCommentById
+Content-Type: application/json
+
+{
+    "commentId" : "6442db018102d3b4d7c127f6"
+}
+
+###
+GET http://localhost:8081/comment/getCommentById
+Content-Type: application/json
+
+{
+    "commentId" : "643e98aaf948950b01f94362"
+}
+
+###
+POST http://localhost:8081/comment/deleteAll
