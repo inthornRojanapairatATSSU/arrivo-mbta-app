@@ -161,7 +161,7 @@ function Alerts() {
           </div>
         )}
 
-        <h2 className="text-center">Info</h2>
+        <h2 className={`text-center ${!light ? 'text-white':''}`}>Info</h2>
         <div className="text-center">
           <Container className="ml-auto">
             <ButtonGroup aria-label="Info button group">
@@ -173,14 +173,14 @@ function Alerts() {
             </ButtonGroup>
             {info && (
               <div className="mt-3">
-                <h4>Description:</h4>
+                <h4 className={`text-center ${!light ? 'text-white':''}`}>Description:</h4>
                 <p>{info}</p>
               </div>
             )}
           </Container>
         </div> &nbsp;
 
-        <h2 className="text-center">Filters</h2>
+        <h2 className={`text-center ${!light ? 'text-white':''}`}>Filters</h2>
         <div className="text-center">
           <label htmlFor="service-effect-filter">Service Effect: </label>&nbsp;
           <input id="service-effect-filter" type="text" onChange={handleFilterServiceEffectChange} value={filterServEff} style={{ width: "100px" }} />
