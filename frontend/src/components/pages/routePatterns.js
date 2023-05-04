@@ -6,7 +6,6 @@ import { Container, Button, ButtonGroup, Modal, ModalHeader, ModalBody, Form, Fo
 import "./App.css";
 
 function RoutePatterns() {
-  
   const [user, setUser] = useState({});
 
   const [isTextWindowOpen, setIsTextWindowOpen] = useState(false);

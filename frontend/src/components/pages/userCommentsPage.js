@@ -5,6 +5,8 @@ import getUserInfo from "../../utilities/decodeJwt";
 function CommentList() {
   const [user, setUser] = useState([]);
   const [comments, setComments] = useState([]);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editComment, setEditComment] = useState({});
   const [filter, setFilter] = useState('All');
 
   useEffect(() => {
@@ -39,6 +41,30 @@ function CommentList() {
         return true;
     }
   }
+
+  const handleEditClick = (comment) => {
+    setEditComment(comment);
+    setShowEditModal(true);
+  };
+
+  const handleEditSubmit = (event) => {
+    event.preventDefault();
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(editComment)
+    };
+    fetch('http://localhost:8081/comment/editComment', requestOptions)
+      .then(response => response.json())
+      .then(() => {
+        setShowEditModal(false);
+        setComments(comments.map(c => c._id === editComment._id ? editComment : c));
+      });
+  };
+
+  const refreshPage = (event) => {
+    window.location.reload();
+  };
 
   async function handleDelete(commentId) {
     const response = await fetch('http://localhost:8081/comment/deleteCommentById', {
@@ -81,7 +107,7 @@ function CommentList() {
                 <Card.Text>{comment.comment}</Card.Text>
                 {comment.username === user.username && (
                   <div>
-                    <Button variant="primary">
+                    <Button variant="primary" onClick={() => handleEditClick(comment)}>
                       Edit
                     </Button>{' '}
                     <Button className="mr-2" variant="danger" onClick={() => handleDelete(comment._id)}>
@@ -95,6 +121,26 @@ function CommentList() {
           ))}
         </Col>
       </Row>
+      <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Comment</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleEditSubmit}>
+            <Form.Group controlId="formStationName">
+              <Form.Label>Station Name</Form.Label>
+              <Form.Control type="text" value={editComment.stationName} onChange={e => setEditComment({...editComment, stationName: e.target.value})} />
+            </Form.Group>
+            <Form.Group controlId="formComment">
+              <Form.Label>Comment</Form.Label>
+              <Form.Control type="text" value={editComment.comment} onChange={e => setEditComment({...editComment, comment: e.target.value})} />
+            </Form.Group>
+            <Button variant="primary" type="submit" onClick={refreshPage}>
+              Save Changes
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
     </Container>
   );
 }
