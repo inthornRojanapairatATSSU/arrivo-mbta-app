@@ -84,7 +84,7 @@ export default function About(props) {
             <div className="accordion-body">
               <strong>This is the third item's accordion body.</strong> It is
              <code>.accordion-body</code>,
-              though the transition does limit overflow.
+              though the transition does limit overow.
             </div>
           </div>
         </div>
