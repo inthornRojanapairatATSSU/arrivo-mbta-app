@@ -6,7 +6,7 @@ const Landingpage = () => {
     
     return (
         <Card style={{ width: '30rem', backgroundColor: '#fff2e6', boxShadow: '3px 3px 3px #d9d9d9' }} className="mx-auto my-4">
-        <Card.Img variant="top" src="https://via.placeholder.com/300x200" />
+        <Card.Img variant="top" src="MBTALandingPage.png" />
         <Card.Body>
           <Card.Title style={{ fontFamily: 'Montserrat', fontSize: '2.5rem', fontWeight: 'bold' }}>Welcome to ARRIVO</Card.Title>
           <Card.Text style={{ fontFamily: 'Roboto', fontSize: '1.2rem', marginTop: '1rem' }}>

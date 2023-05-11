@@ -123,7 +123,7 @@ function CommentList() {
       </Row>
       <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit Comment</Modal.Title>
+          <Modal.Title>Edit Feedback</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleEditSubmit}>
@@ -132,7 +132,7 @@ function CommentList() {
               <Form.Control type="text" value={editComment.stationName} onChange={e => setEditComment({...editComment, stationName: e.target.value})} />
             </Form.Group>
             <Form.Group controlId="formComment">
-              <Form.Label>Comment</Form.Label>
+              <Form.Label>Feedback</Form.Label>
               <Form.Control type="text" value={editComment.comment} onChange={e => setEditComment({...editComment, comment: e.target.value})} />
             </Form.Group>
             <Button variant="primary" type="submit" onClick={refreshPage}>
